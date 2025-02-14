@@ -21,8 +21,11 @@
         console.log(cart)
         showCart();
       }
-      const diplayCart=()=>{
+      const displayCart=()=>{
         cartBox.style.display="block"
+      }
+      const hideCart=()=>{
+        cartBox.style.display="none"
       }
       const deleteCart=(id)=>{
             delete cart[id]
