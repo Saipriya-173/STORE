@@ -1,9 +1,14 @@
 
-      const products = [
-        { id: 1, name: "P1", price: 30 },
-        { id: 2, name: "P2", price: 50 },
-        { id: 3, name: "P3", price: 40 },
-      ];
+      // const products = [
+      //   { id: 1, name: "P1", price: 30 },
+      //   { id: 2, name: "P2", price: 50 },
+      //   { id: 3, name: "P3", price: 40 },
+      // ];
+      let products=[]
+      fetch("products.json")
+      .then((response)=>response.json())
+      .then((data)=>(showProducts(data)))
+
       const cart = {};
       const addToCart = (id) => {
        if(!cart[id]){
@@ -17,15 +22,16 @@
       }
       const decrement=(id)=>{
         cart[id]=cart[id]-1;
-        cart[id]<1 && delete cart[id];
-        console.log(cart)
         showCart();
       }
       const displayCart=()=>{
         cartBox.style.display="block"
+        productBox.style.display="none"
       }
       const hideCart=()=>{
         cartBox.style.display="none"
+        productBox.style.display="block"
+        
       }
       const deleteCart=(id)=>{
             delete cart[id]
@@ -38,8 +44,8 @@
            order.innerHTML=total;
       }
       const showCart = () => {
-        // let count=Object.keys(cart).length
-        // items.innerHTML=count
+         let count=Object.keys(cart).length;
+         items.innerHTML=count
         showTotal()
         let str = "";
         products.map((value) => {
@@ -56,12 +62,20 @@
         });
         divCart.innerHTML = str;
       };
-      const showProducts = () => {
-        let str = "";
+      const showProducts = (data) => {
+        products=data
+        let str = "<div class='row'>";
         products.map((value) => {
-          str += `<div>${value.id}-${value.name}-${value.price}-<button onclick='addToCart(${value.id})'>Add to Cart</button></div>`;
+          str += `<div class='box'> 
+          <img src='${value.url}'>
+    <h3>${value.name}</h3>
+    <p>${value.desc}</p>
+    <h4>${value.price}</h4>
+    <button onclick='addToCart(${value.id})'>Add to Cart</button>
+    </div>`
+         
         });
-        divProducts.innerHTML = str;
+        divProducts.innerHTML = str+"</div>";
         
       };
    
